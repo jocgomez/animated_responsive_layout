@@ -1,5 +1,6 @@
 import 'package:animated_responsive_layout/animations.dart';
 import 'package:animated_responsive_layout/models/models.dart';
+import 'package:animated_responsive_layout/transitions/list_detail_transition.dart';
 import 'package:animated_responsive_layout/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'models/data.dart' as data;
@@ -99,14 +100,18 @@ class _FeedState extends State<Feed> with SingleTickerProviderStateMixin {
                 Expanded(
                   child: Container(
                     color: _backgroundColor,
-                    child: EmailListView(
-                      selectedIndex: selectedIndex,
-                      onSelected: (index) {
-                        setState(() {
-                          selectedIndex = index;
-                        });
-                      },
-                      currentUser: widget.currentUser,
+                    child: ListDetailTransition(
+                      animation: _railAnimation,
+                      one: EmailListView(
+                        selectedIndex: selectedIndex,
+                        onSelected: (index) {
+                          setState(() {
+                            selectedIndex = index;
+                          });
+                        },
+                        currentUser: widget.currentUser,
+                      ),
+                      two: const ReplyListView(),
                     ),
                   ),
                 ),
